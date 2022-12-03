@@ -10,6 +10,12 @@ class UsersController {
     this.usersService = new UsersService();
   }
 
+  public create = async (req: Request, res: Response): Promise<Response> => {
+    const user = await this.usersService.create(req.body);
+
+    return res.status(StatusCodes.OK).json(user);
+  };
+
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     const users = await this.usersService.getAll();
 

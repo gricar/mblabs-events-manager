@@ -9,6 +9,10 @@ export class UsersService {
     this.usersRepository = new UsersRepository();
   }
 
+  public create = async (user: IUser): Promise<IUser> => {
+    return this.usersRepository.create(user);
+  };
+
   public getAll = async (): Promise<IUser[]> => {
     return this.usersRepository.getAll();
   };
