@@ -17,6 +17,9 @@ export class Event {
   @Column({ name: 'tickets_available' })
   ticketsAvailable: number;
 
+  @Column({ name: 'sold_out', default: false })
+  soldOut: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
