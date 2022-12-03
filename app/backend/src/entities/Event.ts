@@ -1,4 +1,6 @@
-import { CreateDateColumn, Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CreateDateColumn, Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Company } from './Company';
+import { University } from './University';
 
 @Entity('events')
 export class Event {
@@ -25,4 +27,10 @@ export class Event {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(() => University, (university) => university.events)
+  university: University;
+
+  @ManyToOne(() => Company, (company) => company.events)
+  company: Company;
 }
