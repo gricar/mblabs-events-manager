@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/**/*.ts",
+    "typeorm": "typeorm-ts-node-commonjs  -d ./src/database/data-source.ts",
+    "migration:run": "typeorm-ts-node-commonjs -d ./src/database/data-source.ts migration:run",
     "build": "tsc -p tsconfig.json",
     "start": "node build/src/server.js",
     "dev": "ts-node-dev --respawn --pretty --transpile-only src/server.ts"

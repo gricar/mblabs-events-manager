@@ -8,6 +8,6 @@ AppDataSource.initialize()
   .then(() => {
     return app.listen(API_PORT, () => console.log(`Server is running on PORT: ${API_PORT}`));
   })
-  .catch((err) => {
-    throw new Error(`Error during Data Source initialization\n${err}'`);
+  .catch((err: Error) => {
+    throw new Error(`Error during Data Source initialization\n${err.message}'`);
   });
