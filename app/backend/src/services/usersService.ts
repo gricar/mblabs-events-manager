@@ -3,7 +3,7 @@ import { User } from '../entities/User';
 import IUsersRepository from '../repositories/interfaces/IUsersRepository';
 import { UsersRepository } from '../repositories/usersRepository';
 import IUsersService from './interfaces/IUsersService';
-import { ConflictError } from '../helpers/api-errors';
+import { ConflictError, NotFoundError } from '../helpers/api-errors';
 
 export class UsersService implements IUsersService {
   private readonly usersRepository: IUsersRepository;
@@ -24,5 +24,15 @@ export class UsersService implements IUsersService {
 
   public getAll = async (): Promise<Partial<User>[]> => {
     return this.usersRepository.getAll();
+  };
+
+  public getById = async (id: string): Promise<Partial<User> | Error> => {
+    const userFound = await this.usersRepository.getById(id);
+
+    if (!userFound) {
+      throw new NotFoundError('User not found!');
+    }
+
+    return userFound;
   };
 }

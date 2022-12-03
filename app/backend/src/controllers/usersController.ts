@@ -21,6 +21,12 @@ class UsersController {
 
     return res.status(StatusCodes.OK).json(users);
   };
+
+  public getById = async (req: Request, res: Response): Promise<Response> => {
+    const user = await this.usersService.getById(req.params.id);
+
+    return res.status(StatusCodes.OK).json(user);
+  };
 }
 
 export default new UsersController();

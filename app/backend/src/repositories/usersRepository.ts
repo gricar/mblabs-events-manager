@@ -26,20 +26,34 @@ export class UsersRepository implements IUsersRepository {
     return { id, username, email, cpf };
   };
 
-  public getAll = async (): Promise<IUser[]> => {
+  public getAll = async (): Promise<Partial<User>[]> => {
     return this.usersRepository.find({
       select: {
         id: true,
         username: true,
-        cpf: true,
         email: true,
+        cpf: true,
       },
     });
   };
 
-  public getByName = async (username: string): Promise<IUser | null> => {
+  public getByName = async (username: string): Promise<Partial<User> | null> => {
     return this.usersRepository.findOne({
       where: { username },
+    });
+  };
+
+  public getById = async (id: string): Promise<Partial<User> | null> => {
+    return this.usersRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        cpf: true,
+      },
     });
   };
 }
