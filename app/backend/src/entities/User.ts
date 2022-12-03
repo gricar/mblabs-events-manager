@@ -33,7 +33,7 @@ export class User implements IUser {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @ManyToMany(() => Event)
-  @JoinTable()
-  event: Event[];
+  @ManyToMany(() => Event, (evento) => evento.users)
+  @JoinTable({ name: 'users_events' })
+  events: Event[];
 }

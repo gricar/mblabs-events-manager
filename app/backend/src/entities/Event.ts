@@ -1,6 +1,15 @@
-import { CreateDateColumn, Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  CreateDateColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Company } from './Company';
 import { University } from './University';
+import { User } from './User';
 
 @Entity('events')
 export class Event {
@@ -33,4 +42,7 @@ export class Event {
 
   @ManyToOne(() => Company, (company) => company.events)
   company: Company;
+
+  @ManyToMany(() => User, (user) => user.events)
+  users: User[];
 }
