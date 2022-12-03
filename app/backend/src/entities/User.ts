@@ -34,5 +34,5 @@ export class User {
 
   @ManyToMany(() => Event)
   @JoinTable()
-  events: Event[];
+  event: Event[];
 }
