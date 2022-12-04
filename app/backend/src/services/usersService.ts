@@ -35,4 +35,20 @@ export class UsersService implements IUsersService {
 
     return userFound;
   };
+
+  public update = async (id: string, user: IUser): Promise<Partial<User> | Error> => {
+    const userFound = await this.usersRepository.getById(id);
+
+    if (!userFound) {
+      throw new NotFoundError('User not found!');
+    }
+
+    const updatedSucess = await this.usersRepository.update(id, user);
+
+    if (!updatedSucess) {
+      throw new Error('Failed to update user');
+    }
+
+    return this.getById(id);
+  };
 }

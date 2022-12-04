@@ -27,6 +27,12 @@ class UsersController {
 
     return res.status(StatusCodes.OK).json(user);
   };
+
+  public update = async (req: Request, res: Response): Promise<Response> => {
+    const userUpdated = await this.usersService.update(req.params.id, req.body);
+
+    return res.status(StatusCodes.OK).json(userUpdated);
+  };
 }
 
 export default new UsersController();

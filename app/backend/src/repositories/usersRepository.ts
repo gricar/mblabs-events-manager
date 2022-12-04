@@ -56,4 +56,10 @@ export class UsersRepository implements IUsersRepository {
       },
     });
   };
+
+  public update = async (id: string, user: IUser): Promise<boolean> => {
+    const { username, cpf, email, password } = user;
+    const { affected } = await this.usersRepository.update({ id }, { username, cpf, email, password });
+    return affected == 1;
+  };
 }
