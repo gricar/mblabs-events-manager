@@ -7,4 +7,5 @@ export default interface IUsersRepository {
   getByName: (username: string) => Promise<Partial<User> | null>;
   getById: (id: string) => Promise<Partial<User> | null>;
   update: (id: string, user: IUser) => Promise<boolean>;
+  remove: (id: string) => Promise<boolean>;
 }

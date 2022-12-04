@@ -62,4 +62,11 @@ export class UsersRepository implements IUsersRepository {
     const { affected } = await this.usersRepository.update({ id }, { username, cpf, email, password });
     return affected == 1;
   };
+
+  public remove = async (id: string): Promise<boolean> => {
+    const { affected } = await this.usersRepository.delete({
+      id,
+    });
+    return affected == 1;
+  };
 }

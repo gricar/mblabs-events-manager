@@ -13,7 +13,7 @@ class UsersController {
   public create = async (req: Request, res: Response): Promise<Response> => {
     const user = await this.usersService.create(req.body);
 
-    return res.status(StatusCodes.OK).json(user);
+    return res.status(StatusCodes.CREATED).json(user);
   };
 
   public getAll = async (req: Request, res: Response): Promise<Response> => {
@@ -29,9 +29,15 @@ class UsersController {
   };
 
   public update = async (req: Request, res: Response): Promise<Response> => {
-    const userUpdated = await this.usersService.update(req.params.id, req.body);
+    await this.usersService.update(req.params.id, req.body);
 
-    return res.status(StatusCodes.OK).json(userUpdated);
+    return res.status(StatusCodes.OK).send('User successfully updated');
+  };
+
+  public remove = async (req: Request, res: Response): Promise<Response> => {
+    await this.usersService.remove(req.params.id);
+
+    return res.status(StatusCodes.OK).send('User successfully removed');
   };
 }
 

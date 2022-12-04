@@ -13,11 +13,7 @@ export class UsersService implements IUsersService {
   }
 
   public create = async (user: IUser): Promise<Partial<User> | Error> => {
-    const userExist = await this.usersRepository.getByName(user.username);
-
-    if (userExist) {
-      throw new ConflictError('Username already exists!');
-    }
+    await this.getByName(user.username);
 
     return this.usersRepository.create(user);
   };
@@ -36,12 +32,20 @@ export class UsersService implements IUsersService {
     return userFound;
   };
 
-  public update = async (id: string, user: IUser): Promise<Partial<User> | Error> => {
-    const userFound = await this.usersRepository.getById(id);
+  public getByName = async (username: string) => {
+    const userExist = await this.usersRepository.getByName(username);
 
-    if (!userFound) {
-      throw new NotFoundError('User not found!');
+    if (userExist) {
+      throw new ConflictError('Username already exists!');
     }
+
+    return userExist;
+  };
+
+  public update = async (id: string, user: IUser): Promise<boolean | Error> => {
+    await this.getById(id);
+
+    await this.getByName(user.username);
 
     const updatedSucess = await this.usersRepository.update(id, user);
 
@@ -49,6 +53,18 @@ export class UsersService implements IUsersService {
       throw new Error('Failed to update user');
     }
 
-    return this.getById(id);
+    return updatedSucess;
+  };
+
+  public remove = async (id: string): Promise<boolean | Error> => {
+    await this.getById(id);
+
+    const removedSucess = await this.usersRepository.remove(id);
+
+    if (!removedSucess) {
+      throw new Error('Failed to delete user');
+    }
+
+    return removedSucess;
   };
 }
