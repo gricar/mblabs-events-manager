@@ -1,7 +1,7 @@
 import { IUser } from '../entities/schemas/user';
 import { User } from '../entities/User';
 import IUsersRepository from '../repositories/interfaces/IUsersRepository';
-import { UsersRepository } from '../repositories/usersRepository';
+import { UsersRepository } from '../repositories/UsersRepository';
 import IUsersService from './interfaces/IUsersService';
 import { ConflictError, NotFoundError } from '../helpers/api-errors';
 
