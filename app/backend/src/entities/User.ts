@@ -8,9 +8,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Event } from './Event';
+import { IUser } from './schemas/user';
 
 @Entity('users')
-export class User {
+export class User implements IUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -32,7 +33,7 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @ManyToMany(() => Event)
-  @JoinTable()
-  event: Event[];
+  @ManyToMany(() => Event, (evento) => evento.users)
+  @JoinTable({ name: 'users_events' })
+  events: Event[];
 }

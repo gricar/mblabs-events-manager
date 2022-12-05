@@ -1,8 +1,9 @@
 import { CreateDateColumn, Column, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Event } from './Event';
+import { ICompany } from './schemas/company';
 
 @Entity('companies')
-export class Company {
+export class Company implements ICompany {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
