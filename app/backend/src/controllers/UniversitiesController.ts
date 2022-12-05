@@ -21,6 +21,12 @@ class UniversitiesController {
 
     return res.status(StatusCodes.OK).json(universities);
   };
+
+  public getById = async (req: Request, res: Response): Promise<Response> => {
+    const university = await this.universitiesService.getById(req.params.id);
+
+    return res.status(StatusCodes.OK).json(university);
+  };
 }
 
 export default new UniversitiesController();

@@ -2,7 +2,7 @@ import IUniversitiesRepository from '../repositories/interfaces/IUniversitiesRep
 import { UniversitiesRepository } from '../repositories/UniversitiesRepository';
 import IUniversitiesService from './interfaces/IUniversitiesService';
 import { University } from '../entities/University';
-import { ConflictError } from '../helpers/api-errors';
+import { ConflictError, NotFoundError } from '../helpers/api-errors';
 import { IUniversity } from '../entities/schemas/university';
 
 export class UniversitiesService implements IUniversitiesService {
@@ -20,6 +20,16 @@ export class UniversitiesService implements IUniversitiesService {
 
   public getAll = async (): Promise<Partial<University>[]> => {
     return this.universitiesRepo.getAll();
+  };
+
+  public getById = async (id: string): Promise<Partial<University> | Error> => {
+    const universityFound = await this.universitiesRepo.getById(id);
+
+    if (!universityFound) {
+      throw new NotFoundError('University not found!');
+    }
+
+    return universityFound;
   };
 
   public getByName = async (universityName: string): Promise<null | Error> => {
