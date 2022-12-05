@@ -15,6 +15,12 @@ class UniversitiesController {
 
     return res.status(StatusCodes.CREATED).json(university);
   };
+
+  public getAll = async (req: Request, res: Response): Promise<Response> => {
+    const universities = await this.universitiesService.getAll();
+
+    return res.status(StatusCodes.OK).json(universities);
+  };
 }
 
 export default new UniversitiesController();

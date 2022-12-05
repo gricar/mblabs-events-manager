@@ -23,6 +23,15 @@ export class UniversitiesRepository implements IUniversitiesRepository {
     return { id, name };
   };
 
+  public getAll = async (): Promise<Partial<University>[]> => {
+    return this.universitiesRepository.find({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  };
+
   public getByName = async (name: string): Promise<Partial<University> | null> => {
     return this.universitiesRepository.findOne({
       where: { name },

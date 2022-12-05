@@ -18,6 +18,10 @@ export class UniversitiesService implements IUniversitiesService {
     return this.universitiesRepo.create(university);
   };
 
+  public getAll = async (): Promise<Partial<University>[]> => {
+    return this.universitiesRepo.getAll();
+  };
+
   public getByName = async (universityName: string): Promise<null | Error> => {
     const universityExist = await this.universitiesRepo.getByName(universityName);
 

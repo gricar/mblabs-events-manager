@@ -3,5 +3,6 @@ import { University } from '../../entities/University';
 
 export default interface IUniversitiesRepository {
   create: (university: IUniversity) => Promise<Partial<University>>;
+  getAll: () => Promise<Partial<University>[]>;
   getByName: (name: string) => Promise<Partial<University> | null>;
 }
