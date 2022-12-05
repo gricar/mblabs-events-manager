@@ -56,7 +56,7 @@ export class UsersService implements IUsersService {
       throw new NotFoundError('User does not exists!');
     }
 
-    const isLoginValid = password == foundUser.password;
+    const isLoginValid = await HashPassword.comparePassword(password, foundUser.password!);
 
     if (!isLoginValid) {
       throw new UnauthorizedError('Password not valid, try again.');
