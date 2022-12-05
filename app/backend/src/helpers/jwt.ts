@@ -18,7 +18,7 @@ class TokenAuthentication {
     return jwt.sign({ payload }, this.jwtSecret, this.jwtConfig);
   }
 
-  public validateToken(token: string): string | JwtPayload | undefined {
+  public validateToken(token: string): JwtPayload | undefined {
     try {
       const decode = jwt.verify(token, this.jwtSecret);
 
