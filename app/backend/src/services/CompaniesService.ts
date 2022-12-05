@@ -18,6 +18,10 @@ export class CompaniesService implements ICompaniesService {
     return this.companiesRepository.create(company);
   };
 
+  public getAll = async (): Promise<Partial<Company>[]> => {
+    return this.companiesRepository.getAll();
+  };
+
   public getByName = async (companyName: string): Promise<null | Error> => {
     const companyExist = await this.companiesRepository.getByName(companyName);
 

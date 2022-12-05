@@ -15,6 +15,12 @@ class CompaniesController {
 
     return res.status(StatusCodes.CREATED).json(company);
   };
+
+  public getAll = async (req: Request, res: Response): Promise<Response> => {
+    const companies = await this.companiesService.getAll();
+
+    return res.status(StatusCodes.OK).json(companies);
+  };
 }
 
 export default new CompaniesController();
