@@ -49,4 +49,9 @@ export class CompaniesRepository implements ICompaniesRepository {
       where: { name },
     });
   };
+
+  public update = async (id: string, { name }: ICompany): Promise<boolean> => {
+    const { affected } = await this.companiesRepository.update({ id }, { name });
+    return affected == 1;
+  };
 }

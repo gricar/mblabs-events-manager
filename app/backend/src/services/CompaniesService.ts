@@ -41,4 +41,18 @@ export class CompaniesService implements ICompaniesService {
 
     return companyExist;
   };
+
+  public update = async (id: string, company: ICompany): Promise<boolean | Error> => {
+    await this.getById(id);
+
+    await this.getByName(company.name);
+
+    const updatedSucess = await this.companiesRepository.update(id, company);
+
+    if (!updatedSucess) {
+      throw new Error('Failed to update company');
+    }
+
+    return updatedSucess;
+  };
 }

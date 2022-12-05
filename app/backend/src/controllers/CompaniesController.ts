@@ -27,6 +27,12 @@ class CompaniesController {
 
     return res.status(StatusCodes.OK).json(company);
   };
+
+  public update = async (req: Request, res: Response): Promise<Response> => {
+    await this.companiesService.update(req.params.id, req.body);
+
+    return res.status(StatusCodes.OK).send('Company successfully updated');
+  };
 }
 
 export default new CompaniesController();

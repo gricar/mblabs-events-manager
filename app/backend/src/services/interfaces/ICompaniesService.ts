@@ -6,4 +6,5 @@ export default interface ICompaniesService {
   getAll: () => Promise<Partial<Company>[]>;
   getById: (id: string) => Promise<Partial<Company> | Error>;
   getByName: (companyName: string) => Promise<null | Error>;
+  update: (id: string, company: ICompany) => Promise<boolean | Error>;
 }

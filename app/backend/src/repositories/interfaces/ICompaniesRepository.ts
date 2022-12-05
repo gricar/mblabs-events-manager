@@ -6,4 +6,5 @@ export default interface ICompaniesRepository {
   getAll: () => Promise<Partial<Company>[]>;
   getById: (id: string) => Promise<Partial<Company> | null>;
   getByName: (name: string) => Promise<Partial<Company> | null>;
+  update: (id: string, company: ICompany) => Promise<boolean>;
 }
