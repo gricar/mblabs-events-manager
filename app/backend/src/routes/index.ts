@@ -2,6 +2,7 @@ import { Request, Router } from 'express';
 import { NotFoundError } from '../helpers/api-errors';
 import companiesRoute from './companies';
 import eventsRoute from './events';
+import loginRoute from './login';
 import usersRoute from './users';
 import universitiesRoute from './universities';
 
@@ -9,6 +10,7 @@ const routes = Router();
 
 routes.use('/companies', companiesRoute);
 routes.use('/events', eventsRoute);
+routes.use('/login', loginRoute);
 routes.use('/users', usersRoute);
 routes.use('/universities', universitiesRoute);
 

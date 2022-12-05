@@ -1,9 +1,10 @@
+import { ILogin } from '../entities/schemas/login';
 import { IUser } from '../entities/schemas/user';
 import { User } from '../entities/User';
 import IUsersRepository from '../repositories/interfaces/IUsersRepository';
 import { UsersRepository } from '../repositories/UsersRepository';
 import IUsersService from './interfaces/IUsersService';
-import { ConflictError, NotFoundError } from '../helpers/api-errors';
+import { ConflictError, NotFoundError, UnauthorizedError } from '../helpers/api-errors';
 
 export class UsersService implements IUsersService {
   private readonly usersRepository: IUsersRepository;
@@ -32,7 +33,7 @@ export class UsersService implements IUsersService {
     return userFound;
   };
 
-  public getByName = async (username: string) => {
+  public getByName = async (username: string): Promise<null | Error> => {
     const userExist = await this.usersRepository.getByName(username);
 
     if (userExist) {
@@ -40,6 +41,22 @@ export class UsersService implements IUsersService {
     }
 
     return userExist;
+  };
+
+  public login = async ({ username, password }: ILogin): Promise<Partial<User>> => {
+    const foundUser = await this.usersRepository.getByName(username);
+
+    if (!foundUser) {
+      throw new NotFoundError('User does not exists!');
+    }
+
+    const isLoginValid = password == foundUser.password;
+
+    if (!isLoginValid) {
+      throw new UnauthorizedError('Password not valid, try again.');
+    }
+
+    return foundUser;
   };
 
   public update = async (id: string, user: IUser): Promise<boolean | Error> => {
