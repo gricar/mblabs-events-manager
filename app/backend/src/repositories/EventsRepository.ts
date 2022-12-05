@@ -67,4 +67,13 @@ export class EventsRepository implements IEventsRepository {
       where: { name },
     });
   };
+
+  public update = async (id: string, event: IEvent): Promise<boolean> => {
+    const { name, eventDay, peopleCapacity, ticketsAvailable, soldOut } = event;
+    const { affected } = await this.eventsRepository.update(
+      { id },
+      { name, eventDay, peopleCapacity, ticketsAvailable, soldOut },
+    );
+    return affected == 1;
+  };
 }

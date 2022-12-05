@@ -41,4 +41,18 @@ export class EventsService implements IEventsService {
 
     return eventExist;
   };
+
+  public update = async (id: string, event: IEvent): Promise<boolean | Error> => {
+    await this.getById(id);
+
+    await this.getByName(event.name);
+
+    const updatedSucess = await this.eventsRepository.update(id, event);
+
+    if (!updatedSucess) {
+      throw new Error('Failed to update event');
+    }
+
+    return updatedSucess;
+  };
 }

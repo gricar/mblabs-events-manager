@@ -27,6 +27,12 @@ class EventsController {
 
     return res.status(StatusCodes.OK).json(event);
   };
+
+  public update = async (req: Request, res: Response): Promise<Response> => {
+    await this.eventsService.update(req.params.id, req.body);
+
+    return res.status(StatusCodes.OK).send('Event successfully updated');
+  };
 }
 
 export default new EventsController();
