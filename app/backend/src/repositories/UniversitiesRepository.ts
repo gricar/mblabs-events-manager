@@ -49,4 +49,9 @@ export class UniversitiesRepository implements IUniversitiesRepository {
       where: { name },
     });
   };
+
+  public update = async (id: string, { name }: IUniversity): Promise<boolean> => {
+    const { affected } = await this.universitiesRepository.update({ id }, { name });
+    return affected == 1;
+  };
 }

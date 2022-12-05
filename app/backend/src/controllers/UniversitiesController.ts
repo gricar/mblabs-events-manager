@@ -27,6 +27,12 @@ class UniversitiesController {
 
     return res.status(StatusCodes.OK).json(university);
   };
+
+  public update = async (req: Request, res: Response): Promise<Response> => {
+    await this.universitiesService.update(req.params.id, req.body);
+
+    return res.status(StatusCodes.OK).send('University successfully updated');
+  };
 }
 
 export default new UniversitiesController();

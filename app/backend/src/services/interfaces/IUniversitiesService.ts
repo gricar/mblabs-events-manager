@@ -6,4 +6,5 @@ export default interface IUniversitiesService {
   getAll: () => Promise<Partial<University>[]>;
   getById: (id: string) => Promise<Partial<University> | Error>;
   getByName: (universityName: string) => Promise<null | Error>;
+  update: (id: string, university: IUniversity) => Promise<boolean | Error>;
 }

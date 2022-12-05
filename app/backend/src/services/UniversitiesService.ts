@@ -41,4 +41,18 @@ export class UniversitiesService implements IUniversitiesService {
 
     return universityExist;
   };
+
+  public update = async (id: string, university: IUniversity): Promise<boolean | Error> => {
+    await this.getById(id);
+
+    await this.getByName(university.name);
+
+    const updatedSucess = await this.universitiesRepo.update(id, university);
+
+    if (!updatedSucess) {
+      throw new Error('Failed to update university');
+    }
+
+    return updatedSucess;
+  };
 }
