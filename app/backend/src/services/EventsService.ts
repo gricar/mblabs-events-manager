@@ -3,7 +3,7 @@ import { EventsRepository } from '../repositories/EventsRepository';
 import IEventsService from './interfaces/IEventsService';
 import { IEvent } from '../entities/schemas/event';
 import { Event } from '../entities/Event';
-import { ConflictError } from '../helpers/api-errors';
+import { ConflictError, NotFoundError } from '../helpers/api-errors';
 
 export class EventsService implements IEventsService {
   private readonly eventsRepository: IEventsRepository;
@@ -20,6 +20,16 @@ export class EventsService implements IEventsService {
 
   public getAll = async (): Promise<Partial<Event>[]> => {
     return this.eventsRepository.getAll();
+  };
+
+  public getById = async (id: string): Promise<Partial<Event> | Error> => {
+    const eventFound = await this.eventsRepository.getById(id);
+
+    if (!eventFound) {
+      throw new NotFoundError('Event not found!');
+    }
+
+    return eventFound;
   };
 
   public getByName = async (eventName: string): Promise<null | Error> => {

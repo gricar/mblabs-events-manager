@@ -21,6 +21,12 @@ class EventsController {
 
     return res.status(StatusCodes.OK).json(events);
   };
+
+  public getById = async (req: Request, res: Response): Promise<Response> => {
+    const event = await this.eventsService.getById(req.params.id);
+
+    return res.status(StatusCodes.OK).json(event);
+  };
 }
 
 export default new EventsController();

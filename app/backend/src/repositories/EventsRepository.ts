@@ -40,6 +40,23 @@ export class EventsRepository implements IEventsRepository {
         name: true,
         eventDay: true,
         peopleCapacity: true,
+        ticketsAvailable: true,
+        soldOut: true,
+      },
+    });
+  };
+
+  public getById = async (id: string): Promise<Partial<Event> | null> => {
+    return this.eventsRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        name: true,
+        eventDay: true,
+        peopleCapacity: true,
+        ticketsAvailable: true,
         soldOut: true,
       },
     });
