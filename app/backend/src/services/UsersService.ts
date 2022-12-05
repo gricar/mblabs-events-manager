@@ -6,6 +6,7 @@ import { UsersRepository } from '../repositories/UsersRepository';
 import IUsersService from './interfaces/IUsersService';
 import { ConflictError, NotFoundError, UnauthorizedError } from '../helpers/api-errors';
 import TokenAuthentication from '../helpers/jwt';
+import HashPassword from '../helpers/hashPassword';
 
 export class UsersService implements IUsersService {
   private readonly usersRepository: IUsersRepository;
@@ -16,6 +17,10 @@ export class UsersService implements IUsersService {
 
   public create = async (user: IUser): Promise<Partial<User> | Error> => {
     await this.getByName(user.username);
+
+    const hashPwd = await HashPassword.generate(user.password);
+
+    user.password = hashPwd;
 
     return this.usersRepository.create(user);
   };
