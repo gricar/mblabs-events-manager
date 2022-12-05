@@ -7,7 +7,7 @@ export default interface IUsersService {
   getAll: () => Promise<Partial<User>[]>;
   getById: (id: string) => Promise<Partial<User> | Error>;
   getByName: (username: string) => Promise<null | Error>;
-  login: (userLogin: ILogin) => Promise<Partial<User>>;
+  login: (userLogin: ILogin) => Promise<string>;
   update: (id: string, user: IUser) => Promise<boolean | Error>;
   remove: (id: string) => Promise<boolean | Error>;
 }
