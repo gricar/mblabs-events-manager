@@ -11,9 +11,15 @@ class EventsController {
   }
 
   public create = async (req: Request, res: Response): Promise<Response> => {
-    const user = await this.eventsService.create(req.body);
+    const event = await this.eventsService.create(req.body);
 
-    return res.status(StatusCodes.CREATED).json(user);
+    return res.status(StatusCodes.CREATED).json(event);
+  };
+
+  public getAll = async (req: Request, res: Response): Promise<Response> => {
+    const events = await this.eventsService.getAll();
+
+    return res.status(StatusCodes.OK).json(events);
   };
 }
 

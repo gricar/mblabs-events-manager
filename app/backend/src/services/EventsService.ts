@@ -18,6 +18,10 @@ export class EventsService implements IEventsService {
     return this.eventsRepository.create(event);
   };
 
+  public getAll = async (): Promise<Partial<Event>[]> => {
+    return this.eventsRepository.getAll();
+  };
+
   public getByName = async (eventName: string): Promise<null | Error> => {
     const eventExist = await this.eventsRepository.getByName(eventName);
 

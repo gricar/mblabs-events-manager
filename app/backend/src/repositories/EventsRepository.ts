@@ -33,6 +33,18 @@ export class EventsRepository implements IEventsRepository {
     return { id, name, eventDay, peopleCapacity, ticketsAvailable, soldOut };
   };
 
+  public getAll = async (): Promise<Partial<Event>[]> => {
+    return this.eventsRepository.find({
+      select: {
+        id: true,
+        name: true,
+        eventDay: true,
+        peopleCapacity: true,
+        soldOut: true,
+      },
+    });
+  };
+
   public getByName = async (name: string): Promise<Partial<Event> | null> => {
     return this.eventsRepository.findOne({
       where: { name },
