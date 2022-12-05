@@ -12,13 +12,13 @@ export class CompaniesRepository implements ICompaniesRepository {
   }
 
   public create = async ({ name }: ICompany): Promise<Partial<Company>> => {
-    const newUser = this.companiesRepository.create({
+    const newCompany = this.companiesRepository.create({
       name,
     });
 
-    await this.companiesRepository.save(newUser);
+    await this.companiesRepository.save(newCompany);
 
-    const { id } = newUser;
+    const { id } = newCompany;
 
     return { id, name };
   };
