@@ -56,13 +56,13 @@ export class UsersService implements IUsersService {
       throw new NotFoundError('User does not exists!');
     }
 
-    const isLoginValid = await HashPassword.comparePassword(password, foundUser.password!);
+    const isLoginValid = await HashPassword.comparePassword(password, foundUser.password as string);
 
     if (!isLoginValid) {
       throw new UnauthorizedError('Password not valid, try again.');
     }
 
-    return TokenAuthentication.generateToken(foundUser.id!);
+    return TokenAuthentication.generateToken(foundUser.id as string);
   };
 
   public update = async (id: string, user: IUser): Promise<boolean | Error> => {
