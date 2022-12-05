@@ -55,4 +55,16 @@ export class UniversitiesService implements IUniversitiesService {
 
     return updatedSucess;
   };
+
+  public remove = async (id: string): Promise<boolean | Error> => {
+    await this.getById(id);
+
+    const removedSucess = await this.universitiesRepo.remove(id);
+
+    if (!removedSucess) {
+      throw new Error('Failed to delete university');
+    }
+
+    return removedSucess;
+  };
 }

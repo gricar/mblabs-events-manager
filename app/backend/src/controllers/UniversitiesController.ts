@@ -33,6 +33,12 @@ class UniversitiesController {
 
     return res.status(StatusCodes.OK).send('University successfully updated');
   };
+
+  public remove = async (req: Request, res: Response): Promise<Response> => {
+    await this.universitiesService.remove(req.params.id);
+
+    return res.status(StatusCodes.OK).send('University successfully removed');
+  };
 }
 
 export default new UniversitiesController();

@@ -7,4 +7,5 @@ export default interface IUniversitiesRepository {
   getById: (id: string) => Promise<Partial<University> | null>;
   getByName: (name: string) => Promise<Partial<University> | null>;
   update: (id: string, university: IUniversity) => Promise<boolean>;
+  remove: (id: string) => Promise<boolean>;
 }

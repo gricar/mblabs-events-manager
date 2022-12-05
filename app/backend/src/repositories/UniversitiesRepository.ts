@@ -54,4 +54,11 @@ export class UniversitiesRepository implements IUniversitiesRepository {
     const { affected } = await this.universitiesRepository.update({ id }, { name });
     return affected == 1;
   };
+
+  public remove = async (id: string): Promise<boolean> => {
+    const { affected } = await this.universitiesRepository.delete({
+      id,
+    });
+    return affected == 1;
+  };
 }
