@@ -32,6 +32,18 @@ export class CompaniesRepository implements ICompaniesRepository {
     });
   };
 
+  public getById = async (id: string): Promise<Partial<Company> | null> => {
+    return this.companiesRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  };
+
   public getByName = async (name: string): Promise<Partial<Company> | null> => {
     return this.companiesRepository.findOne({
       where: { name },

@@ -21,6 +21,12 @@ class CompaniesController {
 
     return res.status(StatusCodes.OK).json(companies);
   };
+
+  public getById = async (req: Request, res: Response): Promise<Response> => {
+    const company = await this.companiesService.getById(req.params.id);
+
+    return res.status(StatusCodes.OK).json(company);
+  };
 }
 
 export default new CompaniesController();

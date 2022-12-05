@@ -3,7 +3,7 @@ import { CompaniesRepository } from '../repositories/CompaniesRepository';
 import ICompaniesService from './interfaces/ICompaniesService';
 import { ICompany } from '../entities/schemas/company';
 import { Company } from '../entities/Company';
-import { ConflictError } from '../helpers/api-errors';
+import { ConflictError, NotFoundError } from '../helpers/api-errors';
 
 export class CompaniesService implements ICompaniesService {
   private readonly companiesRepository: ICompaniesRepository;
@@ -20,6 +20,16 @@ export class CompaniesService implements ICompaniesService {
 
   public getAll = async (): Promise<Partial<Company>[]> => {
     return this.companiesRepository.getAll();
+  };
+
+  public getById = async (id: string): Promise<Partial<Company> | Error> => {
+    const companyFound = await this.companiesRepository.getById(id);
+
+    if (!companyFound) {
+      throw new NotFoundError('Company not found!');
+    }
+
+    return companyFound;
   };
 
   public getByName = async (companyName: string): Promise<null | Error> => {
