@@ -54,4 +54,11 @@ export class CompaniesRepository implements ICompaniesRepository {
     const { affected } = await this.companiesRepository.update({ id }, { name });
     return affected == 1;
   };
+
+  public remove = async (id: string): Promise<boolean> => {
+    const { affected } = await this.companiesRepository.delete({
+      id,
+    });
+    return affected == 1;
+  };
 }

@@ -7,4 +7,5 @@ export default interface ICompaniesService {
   getById: (id: string) => Promise<Partial<Company> | Error>;
   getByName: (companyName: string) => Promise<null | Error>;
   update: (id: string, company: ICompany) => Promise<boolean | Error>;
+  remove: (id: string) => Promise<boolean | Error>;
 }

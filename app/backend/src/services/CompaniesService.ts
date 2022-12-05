@@ -55,4 +55,16 @@ export class CompaniesService implements ICompaniesService {
 
     return updatedSucess;
   };
+
+  public remove = async (id: string): Promise<boolean | Error> => {
+    await this.getById(id);
+
+    const removedSucess = await this.companiesRepository.remove(id);
+
+    if (!removedSucess) {
+      throw new Error('Failed to delete company');
+    }
+
+    return removedSucess;
+  };
 }

@@ -33,6 +33,12 @@ class CompaniesController {
 
     return res.status(StatusCodes.OK).send('Company successfully updated');
   };
+
+  public remove = async (req: Request, res: Response): Promise<Response> => {
+    await this.companiesService.remove(req.params.id);
+
+    return res.status(StatusCodes.OK).send('Company successfully removed');
+  };
 }
 
 export default new CompaniesController();
