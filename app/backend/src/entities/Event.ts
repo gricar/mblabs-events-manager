@@ -10,9 +10,10 @@ import {
 import { Company } from './Company';
 import { University } from './University';
 import { User } from './User';
+import { IEvent } from './schemas/event';
 
 @Entity('events')
-export class Event {
+export class Event implements IEvent {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
