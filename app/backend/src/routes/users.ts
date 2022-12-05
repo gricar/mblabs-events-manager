@@ -10,5 +10,6 @@ users.get('/', usersController.getAll);
 users.get('/:id', usersController.getById);
 users.put('/:id', usersController.update);
 users.delete('/:id', usersController.remove);
+users.post('/buy-ticket', usersController.buyTicket);
 
 export default users;
