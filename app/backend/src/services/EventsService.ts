@@ -55,4 +55,16 @@ export class EventsService implements IEventsService {
 
     return updatedSucess;
   };
+
+  public remove = async (id: string): Promise<boolean | Error> => {
+    await this.getById(id);
+
+    const removedSucess = await this.eventsRepository.remove(id);
+
+    if (!removedSucess) {
+      throw new Error('Failed to delete event');
+    }
+
+    return removedSucess;
+  };
 }

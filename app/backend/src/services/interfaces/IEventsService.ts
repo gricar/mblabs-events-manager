@@ -7,4 +7,5 @@ export default interface IEventsService {
   getById: (id: string) => Promise<Partial<Event> | Error>;
   getByName: (eventName: string) => Promise<null | Error>;
   update: (id: string, event: IEvent) => Promise<boolean | Error>;
+  remove: (id: string) => Promise<boolean | Error>;
 }

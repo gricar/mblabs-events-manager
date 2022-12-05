@@ -76,4 +76,11 @@ export class EventsRepository implements IEventsRepository {
     );
     return affected == 1;
   };
+
+  public remove = async (id: string): Promise<boolean> => {
+    const { affected } = await this.eventsRepository.delete({
+      id,
+    });
+    return affected == 1;
+  };
 }

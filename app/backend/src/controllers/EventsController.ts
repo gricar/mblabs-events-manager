@@ -33,6 +33,12 @@ class EventsController {
 
     return res.status(StatusCodes.OK).send('Event successfully updated');
   };
+
+  public remove = async (req: Request, res: Response): Promise<Response> => {
+    await this.eventsService.remove(req.params.id);
+
+    return res.status(StatusCodes.OK).send('Event successfully removed');
+  };
 }
 
 export default new EventsController();

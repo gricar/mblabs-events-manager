@@ -7,4 +7,5 @@ export default interface IEventsRepository {
   getByName: (name: string) => Promise<Partial<Event> | null>;
   getById: (id: string) => Promise<Partial<Event> | null>;
   update: (id: string, event: IEvent) => Promise<boolean>;
+  remove: (id: string) => Promise<boolean>;
 }
