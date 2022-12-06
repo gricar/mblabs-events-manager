@@ -1,16 +1,49 @@
-import IEventsRepository from '../repositories/interfaces/IEventsRepository';
-import { EventsRepository } from '../repositories/EventsRepository';
 import IEventsService from './interfaces/IEventsService';
+import IEventsRepository from '../repositories/interfaces/IEventsRepository';
+import IUsersRepository from '../repositories/interfaces/IUsersRepository';
+import { EventsRepository } from '../repositories/EventsRepository';
+import { UsersRepository } from '../repositories/UsersRepository';
 import { IEvent } from '../entities/schemas/event';
 import { Event } from '../entities/Event';
-import { ConflictError, NotFoundError } from '../helpers/api-errors';
+import { User } from '../entities/User';
+import { BadRequestError, ConflictError, NotFoundError } from '../helpers/api-errors';
 
 export class EventsService implements IEventsService {
   private readonly eventsRepository: IEventsRepository;
+  private readonly usersRepository: IUsersRepository;
 
   constructor() {
     this.eventsRepository = new EventsRepository();
+    this.usersRepository = new UsersRepository();
   }
+
+  public buyTicket = async (userId: string, eventName: string): Promise<void> => {
+    const user = await this.usersRepository.getById(userId);
+
+    const event = await this.eventsRepository.getByName(eventName);
+
+    if (!event) {
+      throw new NotFoundError('Event not found!');
+    }
+
+    if (event.soldOut) {
+      throw new BadRequestError('This event is sold out.');
+    }
+
+    user?.events?.map((e) => {
+      if (e.name.toLocaleLowerCase() == eventName.toLocaleLowerCase()) {
+        throw new BadRequestError('You already have a ticket for this event.');
+      }
+    });
+
+    if (event.ticketsAvailable! == 1) {
+      event.soldOut = true;
+    }
+
+    event.ticketsAvailable! -= 1;
+
+    await this.eventsRepository.buyTicket(user as User, event as Event);
+  };
 
   public create = async (event: IEvent): Promise<Partial<Event> | Error> => {
     await this.getByName(event.name);

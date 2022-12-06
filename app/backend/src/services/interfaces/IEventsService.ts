@@ -2,6 +2,7 @@ import { IEvent } from '../../entities/schemas/event';
 import { Event } from '../../entities/Event';
 
 export default interface IEventsService {
+  buyTicket: (userId: string, eventName: string) => Promise<void>;
   create: (event: IEvent) => Promise<Partial<Event> | Error>;
   getAll: () => Promise<Partial<Event>[]>;
   getById: (id: string) => Promise<Partial<Event> | Error>;
