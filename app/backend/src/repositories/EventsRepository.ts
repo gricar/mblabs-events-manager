@@ -42,8 +42,11 @@ export class EventsRepository implements IEventsRepository {
     return { id, name, eventDay, peopleCapacity, ticketsAvailable, soldOut };
   };
 
-  public getAll = async (): Promise<Partial<Event>[]> => {
+  public getAll = async (isSoldOut = false): Promise<Partial<Event>[]> => {
     return this.eventsRepository.find({
+      where: {
+        soldOut: isSoldOut,
+      },
       select: {
         id: true,
         name: true,
@@ -51,6 +54,9 @@ export class EventsRepository implements IEventsRepository {
         peopleCapacity: true,
         ticketsAvailable: true,
         soldOut: true,
+      },
+      order: {
+        eventDay: 'ASC',
       },
     });
   };

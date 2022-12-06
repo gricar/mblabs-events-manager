@@ -26,7 +26,9 @@ class EventsController {
   };
 
   public getAll = async (req: Request, res: Response): Promise<Response> => {
-    const events = await this.eventsService.getAll();
+    const isSoldOut = req.query.isSoldOut === 'true';
+
+    const events = await this.eventsService.getAll(isSoldOut);
 
     return res.status(StatusCodes.OK).json(events);
   };

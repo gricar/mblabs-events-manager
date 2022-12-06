@@ -51,8 +51,8 @@ export class EventsService implements IEventsService {
     return this.eventsRepository.create(event);
   };
 
-  public getAll = async (): Promise<Partial<Event>[]> => {
-    return this.eventsRepository.getAll();
+  public getAll = async (isSoldOut: boolean): Promise<Partial<Event>[]> => {
+    return this.eventsRepository.getAll(isSoldOut);
   };
 
   public getById = async (id: string): Promise<Partial<Event> | Error> => {
