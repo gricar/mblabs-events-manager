@@ -10,5 +10,6 @@ events.get('/', EventsController.getAll);
 events.get('/:id', EventsController.getById);
 events.put('/:id', EventsController.update);
 events.delete('/:id', EventsController.remove);
+events.post('/buy-ticket', EventsController.buyTicket);
 
 export default events;
