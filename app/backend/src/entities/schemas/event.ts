@@ -8,6 +8,12 @@ const EventSchema = z.object({
   soldOut: z.boolean(),
 });
 
+const CreateEventSchema = EventSchema.extend({
+  sponsor: z.string(),
+});
+
 type IEvent = z.infer<typeof EventSchema>;
 
-export { EventSchema, IEvent };
+type ICreateEvent = z.infer<typeof CreateEventSchema>;
+
+export { EventSchema, CreateEventSchema, IEvent, ICreateEvent };
