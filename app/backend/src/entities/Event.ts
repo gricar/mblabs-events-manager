@@ -2,6 +2,7 @@ import {
   CreateDateColumn,
   Column,
   Entity,
+  JoinTable,
   ManyToOne,
   ManyToMany,
   PrimaryGeneratedColumn,
@@ -45,5 +46,6 @@ export class Event implements IEvent {
   company: Company;
 
   @ManyToMany(() => User, (user) => user.events)
+  @JoinTable({ name: 'users_events' })
   users: User[];
 }
