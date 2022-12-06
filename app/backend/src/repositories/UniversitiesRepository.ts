@@ -41,6 +41,9 @@ export class UniversitiesRepository implements IUniversitiesRepository {
         id: true,
         name: true,
       },
+      relations: {
+        events: true,
+      },
     });
   };
 

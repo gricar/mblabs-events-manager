@@ -7,6 +7,7 @@ import IUsersService from './interfaces/IUsersService';
 import { ConflictError, NotFoundError, UnauthorizedError } from '../helpers/api-errors';
 import TokenAuthentication from '../helpers/jwt';
 import HashPassword from '../helpers/hashPassword';
+import { UserDTO } from '../DTOs/UserDTO';
 
 export class UsersService implements IUsersService {
   private readonly usersRepository: IUsersRepository;
@@ -29,14 +30,24 @@ export class UsersService implements IUsersService {
     return this.usersRepository.getAll();
   };
 
-  public getById = async (id: string): Promise<Partial<User> | Error> => {
+  public getById = async (id: string): Promise<Partial<UserDTO> | Error> => {
     const userFound = await this.usersRepository.getById(id);
 
     if (!userFound) {
       throw new NotFoundError('User not found!');
     }
 
-    return userFound;
+    const user: UserDTO = {
+      id: userFound.id!,
+      username: userFound.username!,
+      email: userFound.email!,
+      cpf: userFound.cpf!,
+      events: userFound.events?.map((e) => {
+        return { name: e.name, eventDay: e.eventDay.toLocaleDateString() };
+      }),
+    };
+
+    return user;
   };
 
   public getByName = async (username: string): Promise<null | Error> => {

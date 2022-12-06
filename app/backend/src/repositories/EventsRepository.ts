@@ -69,9 +69,16 @@ export class EventsRepository implements IEventsRepository {
         peopleCapacity: true,
         ticketsAvailable: true,
         soldOut: true,
+        company: {
+          name: true,
+        },
+        university: {
+          name: true,
+        },
       },
       relations: {
-        users: true,
+        company: true,
+        university: true,
       },
     });
   };

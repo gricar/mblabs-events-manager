@@ -41,6 +41,9 @@ export class CompaniesRepository implements ICompaniesRepository {
         id: true,
         name: true,
       },
+      relations: {
+        events: true,
+      },
     });
   };
 
