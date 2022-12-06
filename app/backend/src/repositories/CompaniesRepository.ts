@@ -44,7 +44,7 @@ export class CompaniesRepository implements ICompaniesRepository {
     });
   };
 
-  public getByName = async (name: string): Promise<Partial<Company> | null> => {
+  public getByName = async (name: string): Promise<Company | null> => {
     return this.companiesRepository.findOne({
       where: { name },
     });
