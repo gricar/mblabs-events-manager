@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import IEventsRepository from './interfaces/IEventsRepository';
 import { IEvent } from '../entities/schemas/event';
 import { Event } from '../entities/Event';
+import { User } from '../entities/User';
 
 export class EventsRepository implements IEventsRepository {
   private eventsRepository: Repository<Event>;
@@ -10,6 +11,14 @@ export class EventsRepository implements IEventsRepository {
   constructor() {
     this.eventsRepository = AppDataSource.getRepository(Event);
   }
+
+  public buyTicket = async (user: User, event: Event): Promise<void> => {
+    event.users = [...[user]];
+
+    const userEvent = await this.eventsRepository.create(event);
+
+    await this.eventsRepository.save(userEvent);
+  };
 
   public create = async ({
     name,
@@ -58,6 +67,9 @@ export class EventsRepository implements IEventsRepository {
         peopleCapacity: true,
         ticketsAvailable: true,
         soldOut: true,
+      },
+      relations: {
+        users: true,
       },
     });
   };

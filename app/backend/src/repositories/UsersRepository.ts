@@ -54,6 +54,9 @@ export class UsersRepository implements IUsersRepository {
         email: true,
         cpf: true,
       },
+      relations: {
+        events: true,
+      },
     });
   };
 
