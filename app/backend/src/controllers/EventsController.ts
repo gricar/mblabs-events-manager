@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import IEventsService from '../services/interfaces/IEventsService';
 import { EventsService } from '../services/EventsService';
+import { User } from '../entities/User';
 
 class EventsController {
   private readonly eventsService: IEventsService;
@@ -9,6 +10,14 @@ class EventsController {
   constructor() {
     this.eventsService = new EventsService();
   }
+
+  public buyTicket = async (req: Request, res: Response): Promise<Response> => {
+    const userId = req.userId as User['id'];
+
+    await this.eventsService.buyTicket(userId, req.body.eventName);
+
+    return res.status(StatusCodes.OK).send('Successful ticket purchase');
+  };
 
   public create = async (req: Request, res: Response): Promise<Response> => {
     const event = await this.eventsService.create(req.body);

@@ -1,12 +1,4 @@
-import {
-  CreateDateColumn,
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { CreateDateColumn, Column, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Event } from './Event';
 import { IUser } from './schemas/user';
 
@@ -34,6 +26,5 @@ export class User implements IUser {
   updatedAt: Date;
 
   @ManyToMany(() => Event, (evento) => evento.users)
-  @JoinTable({ name: 'users_events' })
   events: Event[];
 }
