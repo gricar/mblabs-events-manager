@@ -3,18 +3,26 @@ import IEventsRepository from '../repositories/interfaces/IEventsRepository';
 import IUsersRepository from '../repositories/interfaces/IUsersRepository';
 import { EventsRepository } from '../repositories/EventsRepository';
 import { UsersRepository } from '../repositories/UsersRepository';
-import { IEvent } from '../entities/schemas/event';
+import { ICreateEvent, IEvent } from '../entities/schemas/event';
 import { Event } from '../entities/Event';
 import { User } from '../entities/User';
 import { BadRequestError, ConflictError, NotFoundError } from '../helpers/api-errors';
+import ICompaniesRepository from '../repositories/interfaces/ICompaniesRepository';
+import { CompaniesRepository } from '../repositories/CompaniesRepository';
+import IUniversitiesRepository from '../repositories/interfaces/IUniversitiesRepository';
+import { UniversitiesRepository } from '../repositories/UniversitiesRepository';
 
 export class EventsService implements IEventsService {
   private readonly eventsRepository: IEventsRepository;
   private readonly usersRepository: IUsersRepository;
+  private readonly companiesRepository: ICompaniesRepository;
+  private readonly universitiesRepository: IUniversitiesRepository;
 
   constructor() {
     this.eventsRepository = new EventsRepository();
     this.usersRepository = new UsersRepository();
+    this.companiesRepository = new CompaniesRepository();
+    this.universitiesRepository = new UniversitiesRepository();
   }
 
   public buyTicket = async (userId: string, eventName: string): Promise<void> => {
@@ -45,10 +53,28 @@ export class EventsService implements IEventsService {
     await this.eventsRepository.buyTicket(user as User, event as Event);
   };
 
-  public create = async (event: IEvent): Promise<Partial<Event> | Error> => {
+  public create = async (event: ICreateEvent): Promise<Partial<Event> | Error> => {
     await this.getByName(event.name);
 
-    return this.eventsRepository.create(event);
+    const companySponsor = await this.companiesRepository.getByName(event.sponsor);
+
+    const universitySponsor = await this.universitiesRepository.getByName(event.sponsor);
+
+    if (!companySponsor && !universitySponsor) {
+      throw new NotFoundError('Sponsor not found!');
+    }
+
+    const newEvent = event as Partial<Event>;
+
+    if (companySponsor) {
+      newEvent.company = companySponsor;
+    }
+
+    if (universitySponsor) {
+      newEvent.university = universitySponsor;
+    }
+
+    return this.eventsRepository.create(newEvent as Event);
   };
 
   public getAll = async (isSoldOut: boolean): Promise<Partial<Event>[]> => {

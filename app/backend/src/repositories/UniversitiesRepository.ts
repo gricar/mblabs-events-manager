@@ -44,7 +44,7 @@ export class UniversitiesRepository implements IUniversitiesRepository {
     });
   };
 
-  public getByName = async (name: string): Promise<Partial<University> | null> => {
+  public getByName = async (name: string): Promise<University | null> => {
     return this.universitiesRepository.findOne({
       where: { name },
     });

@@ -20,26 +20,22 @@ export class EventsRepository implements IEventsRepository {
     await this.eventsRepository.save(userEvent);
   };
 
-  public create = async ({
-    name,
-    eventDay,
-    peopleCapacity,
-    ticketsAvailable,
-    soldOut,
-  }: IEvent): Promise<Partial<Event>> => {
+  public create = async (evento: Partial<Event>): Promise<Partial<Event>> => {
+    const { name, eventDay, peopleCapacity, ticketsAvailable, company, university } = evento;
     const newEvent = this.eventsRepository.create({
       name,
       eventDay,
       peopleCapacity,
       ticketsAvailable,
-      soldOut,
+      company,
+      university,
     });
 
     await this.eventsRepository.save(newEvent);
 
     const { id } = newEvent;
 
-    return { id, name, eventDay, peopleCapacity, ticketsAvailable, soldOut };
+    return { id, name, eventDay, peopleCapacity, ticketsAvailable };
   };
 
   public getAll = async (isSoldOut = false): Promise<Partial<Event>[]> => {
