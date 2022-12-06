@@ -4,8 +4,11 @@ const dateSchema = z.preprocess((arg) => {
   if (typeof arg == 'string' || arg instanceof Date) return new Date(arg);
 }, z.date().min(new Date()));
 
-const EventSchema = z.object({
+const EventNameSchema = z.object({
   name: z.string().min(4),
+});
+
+const EventSchema = EventNameSchema.extend({
   eventDay: dateSchema,
   peopleCapacity: z.number().positive(),
   ticketsAvailable: z.number().positive(),
@@ -19,8 +22,10 @@ const CreateEventSchema = EventSchema.extend({
   path: ['ticketsAvailable'],
 });
 
+type IEventName = z.infer<typeof EventNameSchema>;
+
 type IEvent = z.infer<typeof EventSchema>;
 
 type ICreateEvent = z.infer<typeof CreateEventSchema>;
 
-export { EventSchema, CreateEventSchema, IEvent, ICreateEvent };
+export { EventNameSchema, EventSchema, CreateEventSchema, IEventName, IEvent, ICreateEvent };
