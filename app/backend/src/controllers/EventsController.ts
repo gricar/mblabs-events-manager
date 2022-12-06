@@ -14,7 +14,7 @@ class EventsController {
   public buyTicket = async (req: Request, res: Response): Promise<Response> => {
     const userId = req.userId as User['id'];
 
-    await this.eventsService.buyTicket(userId, req.body.eventName);
+    await this.eventsService.buyTicket(userId, req.body);
 
     return res.status(StatusCodes.OK).send('Successful ticket purchase');
   };

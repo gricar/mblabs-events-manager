@@ -9,7 +9,7 @@ users.post('/', validateUser, usersController.create);
 users.use(auth);
 users.get('/', usersController.getAll);
 users.get('/:id', usersController.getById);
-users.put('/:id', usersController.update);
+users.put('/:id', validateUser, usersController.update);
 users.delete('/:id', usersController.remove);
 
 export default users;
