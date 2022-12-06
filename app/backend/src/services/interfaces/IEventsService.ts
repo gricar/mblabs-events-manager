@@ -1,8 +1,8 @@
-import { IEvent, ICreateEvent } from '../../entities/schemas/event';
+import { IEvent, ICreateEvent, IEventName } from '../../entities/schemas/event';
 import { Event } from '../../entities/Event';
 
 export default interface IEventsService {
-  buyTicket: (userId: string, eventName: string) => Promise<void>;
+  buyTicket: (userId: string, { name }: IEventName) => Promise<void>;
   create: (event: ICreateEvent) => Promise<Partial<Event> | Error>;
   getAll: (isSoldOut: boolean) => Promise<Partial<Event>[]>;
   getById: (id: string) => Promise<Partial<Event> | Error>;

@@ -3,7 +3,7 @@ import IEventsRepository from '../repositories/interfaces/IEventsRepository';
 import IUsersRepository from '../repositories/interfaces/IUsersRepository';
 import { EventsRepository } from '../repositories/EventsRepository';
 import { UsersRepository } from '../repositories/UsersRepository';
-import { ICreateEvent, IEvent } from '../entities/schemas/event';
+import { ICreateEvent, IEvent, IEventName } from '../entities/schemas/event';
 import { Event } from '../entities/Event';
 import { User } from '../entities/User';
 import { BadRequestError, ConflictError, NotFoundError } from '../helpers/api-errors';
@@ -25,10 +25,10 @@ export class EventsService implements IEventsService {
     this.universitiesRepository = new UniversitiesRepository();
   }
 
-  public buyTicket = async (userId: string, eventName: string): Promise<void> => {
+  public buyTicket = async (userId: string, { name }: IEventName): Promise<void> => {
     const user = await this.usersRepository.getById(userId);
 
-    const event = await this.eventsRepository.getByName(eventName);
+    const event = await this.eventsRepository.getByName(name);
 
     if (!event) {
       throw new NotFoundError('Event not found!');
@@ -39,7 +39,7 @@ export class EventsService implements IEventsService {
     }
 
     user?.events?.map((e) => {
-      if (e.name.toLocaleLowerCase() == eventName.toLocaleLowerCase()) {
+      if (e.name.toLocaleLowerCase() == name.toLocaleLowerCase()) {
         throw new BadRequestError('You already have a ticket for this event.');
       }
     });
