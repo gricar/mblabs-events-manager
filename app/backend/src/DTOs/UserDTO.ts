@@ -12,9 +12,9 @@ export interface UserDTO {
 }
 
 export const mapperUserDto = (user: Partial<User>): UserDTO => ({
-  id: user.id!,
-  username: user.username!,
-  email: user.email!,
-  cpf: user.cpf!,
+  id: user.id || '',
+  username: user.username || '',
+  email: user.email || '',
+  cpf: user.cpf || '',
   events: user.events?.map((e) => ({ name: e.name, eventDay: e.eventDay.toLocaleDateString() })),
 });
