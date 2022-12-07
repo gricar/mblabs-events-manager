@@ -4,6 +4,7 @@ import ICompaniesService from './interfaces/ICompaniesService';
 import { ICompany } from '../entities/schemas/company';
 import { Company } from '../entities/Company';
 import { ConflictError, NotFoundError } from '../helpers/api-errors';
+import { CompanyDTO, mapperCompanyDto } from '../DTOs/CompanyDTO';
 
 export class CompaniesService implements ICompaniesService {
   private readonly companiesRepository: ICompaniesRepository;
@@ -22,14 +23,14 @@ export class CompaniesService implements ICompaniesService {
     return this.companiesRepository.getAll();
   };
 
-  public getById = async (id: string): Promise<Partial<Company> | Error> => {
+  public getById = async (id: string): Promise<Partial<CompanyDTO> | Error> => {
     const companyFound = await this.companiesRepository.getById(id);
 
     if (!companyFound) {
       throw new NotFoundError('Company not found!');
     }
 
-    return companyFound;
+    return mapperCompanyDto(companyFound);
   };
 
   public getByName = async (companyName: string): Promise<null | Error> => {

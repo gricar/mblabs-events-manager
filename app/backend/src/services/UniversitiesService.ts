@@ -4,6 +4,7 @@ import IUniversitiesService from './interfaces/IUniversitiesService';
 import { University } from '../entities/University';
 import { ConflictError, NotFoundError } from '../helpers/api-errors';
 import { IUniversity } from '../entities/schemas/university';
+import { mapperUniversityDto, UniversityDTO } from '../DTOs/UniversityDTO';
 
 export class UniversitiesService implements IUniversitiesService {
   private readonly universitiesRepo: IUniversitiesRepository;
@@ -22,14 +23,14 @@ export class UniversitiesService implements IUniversitiesService {
     return this.universitiesRepo.getAll();
   };
 
-  public getById = async (id: string): Promise<Partial<University> | Error> => {
+  public getById = async (id: string): Promise<Partial<UniversityDTO> | Error> => {
     const universityFound = await this.universitiesRepo.getById(id);
 
     if (!universityFound) {
       throw new NotFoundError('University not found!');
     }
 
-    return universityFound;
+    return mapperUniversityDto(universityFound);
   };
 
   public getByName = async (universityName: string): Promise<null | Error> => {

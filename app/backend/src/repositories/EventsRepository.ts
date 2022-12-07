@@ -13,7 +13,7 @@ export class EventsRepository implements IEventsRepository {
   }
 
   public buyTicket = async (user: User, event: Event): Promise<void> => {
-    event.users = [...[user]];
+    event.users = [...event.users, ...[user]];
 
     const userEvent = await this.eventsRepository.create(event);
 
@@ -86,6 +86,7 @@ export class EventsRepository implements IEventsRepository {
   public getByName = async (name: string): Promise<Partial<Event> | null> => {
     return this.eventsRepository.findOne({
       where: { name },
+      relations: { users: true },
     });
   };
 

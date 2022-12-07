@@ -7,7 +7,7 @@ import IUsersService from './interfaces/IUsersService';
 import { ConflictError, NotFoundError, UnauthorizedError } from '../helpers/api-errors';
 import TokenAuthentication from '../helpers/jwt';
 import HashPassword from '../helpers/hashPassword';
-import { UserDTO } from '../DTOs/UserDTO';
+import { mapperUserDto, UserDTO } from '../DTOs/UserDTO';
 
 export class UsersService implements IUsersService {
   private readonly usersRepository: IUsersRepository;
@@ -37,17 +37,7 @@ export class UsersService implements IUsersService {
       throw new NotFoundError('User not found!');
     }
 
-    const user: UserDTO = {
-      id: userFound.id!,
-      username: userFound.username!,
-      email: userFound.email!,
-      cpf: userFound.cpf!,
-      events: userFound.events?.map((e) => {
-        return { name: e.name, eventDay: e.eventDay.toLocaleDateString() };
-      }),
-    };
-
-    return user;
+    return mapperUserDto(userFound);
   };
 
   public getByName = async (username: string): Promise<null | Error> => {
